@@ -260,6 +260,7 @@ main .overview .right  span {
 
 .charts .container .days ul li {
     padding: 10px 20px;
+    cursor: pointer;
     color: var(--sidebar-color);
 }
 
@@ -303,7 +304,7 @@ main .overview .right  span {
 .canvaces .right {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 950px;
     justify-content: space-between;
 }
 
@@ -345,11 +346,8 @@ main .overview .right  span {
     }
     .canvaces .right {
         flex-direction: column;
-        /* width: 30%; */
-        /* align-items: flex-start; */
-    }
-    .canvaces .left {
-        /* width: 60%; */
+        align-items: flex-end;
+        width: 100%;
     }
 
     .charts .Asset {
@@ -440,7 +438,7 @@ main .overview .right  span {
 .charts .Profits .head h3 i {
     margin-left: 3px;
     font-size: 12px;
-        color: rgb(132, 142, 156);
+    color: rgb(132, 142, 156);
 }
 /* charts */
 /* table */
@@ -449,6 +447,7 @@ main .overview .right  span {
 }
 
 .table .head {
+    height: 42px;
     display: flex;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.315);
@@ -465,11 +464,12 @@ main .overview .right  span {
 }
 
 .table .body .row {
+    height: 57px;
     transition: 0.4s;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 35px 20px;
+    padding: 20px;
     border-top: 1px solid rgb(132 142 156 / 28%);
 }
 

@@ -91,8 +91,6 @@ let CulumativeChart = new Chart(Culumative, {
     },
 });
 
-
-
 // asset
 const asset = document.getElementById("Asset");
 
@@ -134,7 +132,6 @@ function generateLegend()
 
     assetChart.legend.legendItems.forEach((dataset, index) => {
       const text = dataset.text;
-      console.log(dataset)
       const bgColor = dataset.fillStyle;
 
       const li = document.createElement("li");
@@ -167,12 +164,12 @@ generateLegend();
 
 const Daily = document.getElementById('Daily');
 
-new Chart(Daily, {
+let dailyChart = new Chart(Daily, {
   type: 'bar',
   data: {
     labels: ["",'10-14', ,'10-15', ,'10-16', ,'10-17', ,'10-18', ,'10-19', ,'10-20', ""],
     datasets: [{
-      label: '# of Votes',
+      label: 'Daily PNL',
       data: [,46, ,-1, ,-3, ,-5, ,-0.5, ,-0.5, ,0.5,],
       borderWidth: 1,
       backgroundColor: ["","#20b26c", ,"#ef454a", ,"#ef454a", ,"#ef454a", ,"#ef454a", ,"#ef454a", ,"#20b26c",""]
@@ -216,7 +213,7 @@ let NetChart = new Chart(Net, {
     labels: ["",'10-14', '10-15', '10-16', '10-17', '10-18', '10-19', '10-20', ""],
     datasets: [
       {
-      label: 'Cumulative PNL(%)',
+      label: 'Net Worth',
       data: [,620, 400, 400, 300, 100, 30, 40,],
       borderWidth: 2,
       pointStyle:"circle",
@@ -319,3 +316,205 @@ let profitsChart = new Chart(profits, {
       }
     },
 });
+
+// days loop
+const daysLi = Array.from(document.querySelectorAll(".days li:not(:last-child)"));
+
+console.log(daysLi);
+const charts = [CulumativeChart, dailyChart,profitsChart, NetChart];
+
+daysLi.forEach((li) => {
+  li.addEventListener("click", (e) => {
+    daysLi.forEach((li) => {
+      li.classList.remove("active");
+    });
+    e.currentTarget.classList.add("active");
+    if (e.currentTarget.textContent.includes("30"))
+    {
+      charts.forEach((chart) => {
+        chart.data.labels = ["",
+        "9-21",
+        "9-22",
+        "9-23",
+        "9-24",
+        "9-25",
+        "9-26",
+        "9-27",
+        "9-28",
+        "9-29",
+        "9-30",
+        "10-1",
+        "10-2",
+        "10-3",
+        "10-4",
+        "10-5",
+        "10-6",
+        "10-7",
+        "10-8",
+        "10-9",
+        "10-10",
+        "10-11",
+        "10-12",
+        "10-13",
+        '10-14', '10-15', '10-16', '10-17', '10-18', '10-19', '10-20',
+        ""];
+        if (chart.data.datasets[0].label == 'Cumulative PNL(%)')
+        {
+          if (chart.data.datasets[0].data.length > 20)
+          {
+            return;
+          }else {
+            chart.data.datasets[0].data.push(10, 20, 12, 30, 50, 80, 60, 10 , 20, 15, 60, 22, 15, 19, 10, 20, 30, 20, 22.5, 27, 30, 36, 0);
+            chart.data.datasets[1].data.push(10, 0, 5, 9, 24, 60, 60, 11 , 5, 15, 13, 31, 60, 20, 22, 24, 16, 18, 32.5, 48, 3, 0, 10);
+          }
+  
+        }else if (chart.data.datasets[0].label == "Daily PNL")
+        {
+          chart.data.datasets[0].backgroundColor = ["#20b26c", "#20b26c"  ,"#ef454a" ,"#ef454a" ,"#ef454a" ,"#ef454a" ,"#ef454a" ,"#20b26c",
+          "#ef454a",
+          "#ef454a",
+          "#ef454a",
+          "#20b26c",
+          "#20b26c",
+          "#ef454a",
+          "#20b26c",
+          "#20b26c",
+          "#20b26c",
+          "#20b26c",
+          "#ef454a",
+          "#ef454a",
+          "#ef454a",
+          "#ef454a",
+          "#20b26c",
+          "#ef454a",
+          "#ef454a",
+          "#20b26c",
+          "#ef454a",
+          "#ef454a",
+          "#20b26c"
+          ];
+          chart.data.datasets[0].data.push(10, 20, 12, 30, 50, 80, 60, 10 , 20, 15, 60, 22, 15, 19, 10, 20, 30, 20, 22.5, 27, 30, 36, 0);
+        }
+        else {
+          if (chart.data.datasets[0].data.length > 20)
+          {
+            return;
+          }else {
+            chart.data.datasets[0].data.push(10, 20, 12, 30, 50, 80, 60, 10 , 20, 15, 60, 22, 15, 19, 10, 20, 30, 20, 22.5, 27, 30, 36, 0);
+          }
+          
+        }
+
+        chart.update();
+      });
+      // table
+      function appendRow(date, daily, cumulative, cumulativePercent)
+      {
+        let row = document.createElement("div");
+        row.className = "row";
+        let spans = [];
+        for (let i = 0; i < 4; i++)
+        {
+          let span = document.createElement("span");
+          spans.push(span);
+        }
+        
+        spans[0].textContent = date;
+        spans[1].textContent = daily;
+        spans[2].textContent = cumulative;
+        spans[3].textContent = cumulativePercent;
+        for (let i = 0; i < 4; i++)
+        {
+          row.appendChild(spans[i]);
+        }
+        document.querySelector(".table .body").appendChild(row);
+      }
+      appendRow("2023-10-14", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-13", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-12", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-11", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-10", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-9", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-8", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-7", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-6", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-5", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-4", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-3", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-2", "$ 1.02", "$38", "7%");
+      appendRow("2023-10-1", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-30", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-29", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-28", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-27", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-26", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-25", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-24", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-23", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-22", "$ 1.02", "$38", "7%");
+      appendRow("2023-9-21", "$ 1.02", "$38", "7%");
+
+    }else if (e.currentTarget.textContent.includes("7"))
+    {
+      charts.forEach((chart) => {
+        chart.data.labels = ["",'10-14', '10-15', '10-16', '10-17', '10-18', '10-19', '10-20',""];
+        if (chart.data.datasets[0].label == 'Cumulative PNL(%)')
+        {
+          chart.data.datasets[0].data = [,8, 7, 6, 5.5, 5.2, 5.2, 5.2,];
+          chart.data.datasets[1].data = [,2, 4, 3, 2, 3, 4.2, 4,];
+          
+        }else if (chart.data.datasets[0].label == "Daily PNL") {
+          console.log(chart);
+          chart.data.datasets[0].data = [,46, ,-1, ,-3, ,-5, ,-0.5, ,-0.5, ,0.5,];
+          chart.data.labels = ["",'10-14', ,'10-15', ,'10-16', ,'10-17', ,'10-18', ,'10-19', ,'10-20', ""];
+        }else if (chart.data.datasets[0].label == "Net Worth")
+        {
+          chart.data.datasets[0].data = [,620, 400, 400, 300, 100, 30, 40,];
+        }else if (chart.data.datasets[0].label == "Profits")
+        {
+          chart.data.datasets[0].data = [,46, 45, 41, 37, 37.5, 37.5, 37.5,];
+        }
+        chart.update();
+      });
+      document.querySelector(".table .body").innerHTML = `
+      <div class="row">
+      <span>2023-10-20</span>
+      <span>$ 0.02</span>
+      <span>$37.27</span>
+      <span>6.4%</span>
+  </div>
+  <div class="row">
+      <span>2023-10-19</span>
+      <span>$ 0.02</span>
+      <span>$37.27</span>
+      <span>6.4%</span>
+  </div>
+  <div class="row">
+      <span>2023-10-18</span>
+      <span>$ 0.02</span>
+      <span>$37.27</span>
+      <span>6.4%</span>
+  </div>
+  <div class="row">
+      <span>2023-10-17</span>
+      <span>$ 0.02</span>
+      <span>$37.27</span>
+      <span>6.4%</span>
+  </div>
+  <div class="row">
+      <span>2023-10-16</span>
+      <span>$ 0.02</span>
+      <span>$37.27</span>
+      <span>6.4%</span>
+  </div>
+  <div class="row">
+      <span>2023-10-15</span>
+      <span>$ 0.02</span>
+      <span>$37.27</span>
+      <span>6.4%</span>
+  </div>
+      `
+    }
+  });
+});
+
