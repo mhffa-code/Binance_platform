@@ -138,12 +138,16 @@ function generateLegend()
       const bgColor = dataset.fillStyle;
 
       const li = document.createElement("li");
+      li.style.padding = "1px 3px";
+      li.style.backgroundColor = "#9e9e9e29";
+
       const span = document.createElement("span");
       span.style.backgroundColor = `${bgColor}`;
 
       // text
       const p = document.createElement("P");
-
+      p.style.fontSize = "12px";
+      p.style.marginLeft = "5px";
       p.textContent = text;
 
     ul.appendChild(li);
