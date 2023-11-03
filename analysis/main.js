@@ -415,8 +415,7 @@ daysLi.forEach((li) => {
         let spans = [];
         for (let i = 0; i < 4; i++)
         {
-          let span = document.createElement("span");
-          spans.push(span);
+          spans.push(document.createElement("span"));
         }
         
         spans[0].textContent = date;
